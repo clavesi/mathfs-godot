@@ -592,7 +592,7 @@ namespace Freya {
 		[MethodImpl( INLINE )] public static float Repeat( float value, float length ) => Clamp( value - Floor( value / length ) * length, 0.0f, length );
 
 		/// <summary>Modulo, but, behaves the way you want with negative values, for stuff like array[(n+1)%length] etc.</summary>
-		[MethodImpl( INLINE )] public static int Mod( int value, int length ) => ( value % length + length ) % length;
+		[MethodImpl( INLINE )] public static int Mod( int value, int length ) => value >= 0 ? value % length : ( value % length + length ) % length;
 
 		/// <summary>Repeats a value within a range, going back and forth</summary>
 		[MethodImpl( INLINE )] public static float PingPong( float t, float length ) => length - Abs( Repeat( t, length * 2f ) - length );
@@ -779,6 +779,18 @@ namespace Freya {
 		/// <param name="oBounds">The output Bounds</param>
 		/// <param name="iPos">The input position in the input Bounds space</param>
 		[MethodImpl( INLINE )] public static Vector3 Remap( Bounds iBounds, Bounds oBounds, Vector3 iPos ) => Remap( iBounds.min, iBounds.max, oBounds.min, oBounds.max, iPos );
+
+		/// <summary>Remaps a value from the input range to the output range</summary>
+		/// <param name="inRange">The input range</param>
+		/// <param name="outRange">The output range</param>
+		/// <param name="value">The value to remap from the input range</param>
+		[MethodImpl( INLINE )] public static float Remap( FloatRange inRange, FloatRange outRange, float value ) => Remap( inRange.a, inRange.b, outRange.a, outRange.b, value );
+
+		/// <summary>Remaps a value from the input range to the output range, clamping to make sure it does not extrapolate.</summary>
+		/// <param name="inRange">The input range</param>
+		/// <param name="outRange">The output range</param>
+		/// <param name="value">The value to remap from the input range</param>
+		[MethodImpl( INLINE )] public static float RemapClamped( FloatRange inRange, FloatRange outRange, float value ) => RemapClamped( inRange.a, inRange.b, outRange.a, outRange.b, value );
 
 		/// <summary>Exponential interpolation, the multiplicative version of lerp, useful for values such as scaling or zooming</summary>
 		/// <param name="a">The start value</param>

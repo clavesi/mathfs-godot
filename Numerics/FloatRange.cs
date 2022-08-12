@@ -59,6 +59,12 @@ namespace Freya {
 		/// <param name="output">The output range</param>
 		public static float Remap( float value, FloatRange input, FloatRange output ) => output.Lerp( input.InverseLerp( value ) );
 
+		/// <summary>Remaps a range from the <c>input</c> range to the <c>output</c> range</summary>
+		/// <param name="value">The range to remap</param>
+		/// <param name="input">The input range</param>
+		/// <param name="output">The output range</param>
+		public static FloatRange Remap( FloatRange value, FloatRange input, FloatRange output ) => new(Remap( value.a, input, output ), Remap( value.b, input, output ));
+
 		/// <summary>Returns whether or not this range overlaps another range</summary>
 		/// <param name="other">The other range to test overlap with</param>
 		public bool Overlaps( FloatRange other ) {
@@ -93,6 +99,9 @@ namespace Freya {
 			Vector3 size = new(rangeX.Length, rangeY.Length, rangeZ.Length);
 			return new Bounds( center, size );
 		}
+
+		public static FloatRange operator -( FloatRange range, float v ) => new(range.a - v, range.b - v);
+		public static FloatRange operator +( FloatRange range, float v ) => new(range.a + v, range.b + v);
 
 		public static implicit operator FloatRange( (float a, float b) tuple ) => new FloatRange( tuple.a, tuple.b );
 		public static bool operator ==( FloatRange a, FloatRange b ) => a.a == b.a && a.b == b.b;

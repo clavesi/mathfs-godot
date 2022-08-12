@@ -191,6 +191,14 @@ namespace Freya {
 				Mathfs.Lerp( r.yMin, r.yMax, tPos.y )
 			);
 
+		/// <summary>The x axis range of this rectangle</summary>
+		/// <param name="rect">The rectangle to get the x range of</param>
+		public static FloatRange RangeX( this Rect rect ) => ( rect.xMin, rect.xMax );
+
+		/// <summary>The y axis range of this rectangle</summary>
+		/// <param name="rect">The rectangle to get the y range of</param>
+		public static FloatRange RangeY( this Rect rect ) => ( rect.yMin, rect.yMax );
+
 		#endregion
 
 		#region Simple float and int operations
@@ -579,6 +587,12 @@ namespace Freya {
 
 		/// <inheritdoc cref="Mathfs.RemapClamped(float,float,float,float,float)"/>
 		[MethodImpl( INLINE )] public static float RemapClamped( this float value, float iMin, float iMax, float oMin, float oMax ) => Mathfs.RemapClamped( iMin, iMax, oMin, oMax, value );
+
+		/// <inheritdoc cref="Mathfs.Remap(float,FloatRange,FloatRange)"/>
+		[MethodImpl( INLINE )] public static float Remap( this float value, FloatRange inRange, FloatRange outRange ) => Mathfs.Remap( inRange.a, inRange.b, outRange.a, outRange.b, value );
+
+		/// <inheritdoc cref="Mathfs.RemapClamped(float,FloatRange,FloatRange)"/>
+		[MethodImpl( INLINE )] public static float RemapClamped( this float value, FloatRange inRange, FloatRange outRange ) => Mathfs.RemapClamped( inRange.a, inRange.b, outRange.a, outRange.b, value );
 
 		/// <inheritdoc cref="Mathfs.Remap(float,float,float,float,int)"/>
 		[MethodImpl( INLINE )] public static float Remap( this int value, float iMin, float iMax, float oMin, float oMax ) => Mathfs.Remap( iMin, iMax, oMin, oMax, value );
